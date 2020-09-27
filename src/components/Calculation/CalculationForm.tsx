@@ -34,7 +34,11 @@ const CalculationForm = ({
   const processDiscount = (event: any) => {
     event.preventDefault();
     if (validate(salary)) {
-      let total: Result = CalculationService.Calculate(salary);
+      let income = Number(salary);
+      if (income < 7000) income = 7000;
+      if (income > 200000) income = 200000;
+
+      let total: Result = CalculationService.Calculate(income);
       HistoryService.Set(total);
       setResult(total);
     }

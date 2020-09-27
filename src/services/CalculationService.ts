@@ -1,7 +1,7 @@
 import { Result } from "../models/Result";
 
-const Calculate = (salary: string): Result => {
-  let income = Number(salary);
+const Calculate = (salary: number): Result => {
+  let income = salary;
   let arsPercent: number = 3.04;
   let afpPercent: number = 2.87;
   let arsDiscount: number = round((income * arsPercent) / 100);
