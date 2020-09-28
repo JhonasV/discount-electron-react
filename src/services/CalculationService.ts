@@ -2,6 +2,10 @@ import { Result } from "../models/Result";
 
 const Calculate = (salary: number): Result => {
   let income = salary;
+
+  if (income < 7000) income = 7000;
+  if (income > 200000) income = 200000;
+
   let arsPercent: number = 3.04;
   let afpPercent: number = 2.87;
   let arsDiscount: number = round((income * arsPercent) / 100);
