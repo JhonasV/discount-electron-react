@@ -1,22 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+
 import { Button } from "../UI/Buttons";
 import { Input } from "../UI/Controls";
 import HistoryService from "../../services/HistoryService";
 import CalculationService from "../../services/CalculationService";
 import { Result } from "../../models/Result";
 import propTypes from "prop-types";
-// import electron from "electron";
-const Form = styled.form`
-  padding: 1em;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+import Form from '../UI/Form';
 
-  h2 {
-    color: black;
-  }
-`;
 
 type CalculationFormProps = {
   salary: string;

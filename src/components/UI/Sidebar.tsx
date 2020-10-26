@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import Menu from '../../config/menu';
+import { Users } from "../../models/Users";
+import { IMenuItem } from "../../models/MenuItems";
+import { Roles } from "../../models/Roles";
 
 const Navbar = styled.ul`
   width: 100%;
@@ -34,28 +38,60 @@ const NavbarItem = styled.li`
   }
 `;
 
-const Sidebar = () => (
+type SidebarProps = {
+  currentUser: Users
+}
+
+const Sidebar = ({currentUser} : SidebarProps) =>  {
+
+  useEffect(() => {
+
+  }, [])
+
+  const renderLogInMenuItems = () =>{
+    let menuItemsFiltered: IMenuItem[] = [];
+    
+    Menu.LogInMenuItems.forEach((item: IMenuItem) => {
+      for (let index = 0; index < currentUser.roles.length; index++) {
+        const role: Roles = currentUser.roles[index];
+        if(item.access.includes(role.name)){
+          menuItemsFiltered.push(item);
+          break;
+        }
+       
+      }
+    });
+
+
+  return menuItemsFiltered.map((item: IMenuItem, i: number) => (
+    <NavLink onClick={item.onClick} key={i} to={item.pathname} activeClassName="active">
+    <NavbarItem>
+      <i className={item.icon}></i> {item.title}
+    </NavbarItem>
+  </NavLink>
+  ));
+
+
+  }
+
+  const renderLogOutMenuItems = () =>{
+    return Menu.LogOutMenuItems.map((item: IMenuItem, i: number) => (
+      <NavLink key={i} to={item.pathname} activeClassName="active">
+      <NavbarItem>
+        <i className={item.icon}></i> {item.title}
+      </NavbarItem>
+    </NavLink>
+    ));
+  }
+return(
   <div>
     <nav>
       <Navbar>
-        {/* <NavLink to="/" activeClassName="active">
-          <NavbarItem>
-            <i className="fas fa-home"></i> Home
-          </NavbarItem>
-        </NavLink> */}
-        <NavLink to="/" activeClassName="active">
-          <NavbarItem>
-            <i className="fas fa-calculator"></i> Calcular
-          </NavbarItem>
-        </NavLink>
-        <NavLink to="/history" activeClassName="active">
-          <NavbarItem>
-            <i className="fas fa-history"></i> Historial
-          </NavbarItem>
-        </NavLink>
+        {currentUser == null ? renderLogOutMenuItems() : renderLogInMenuItems()}
       </Navbar>
     </nav>
   </div>
-);
+)
+}
 
 export default Sidebar;

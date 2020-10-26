@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 
 import styled from "styled-components";
 import HomeBackground from "../../assets/home_bg.svg";
+import { Users } from "../../models/Users";
 const Grid = styled.div`
   display: flex;
 `;
@@ -28,13 +29,15 @@ const Main = styled.main`
   border-radius:1rem;
 `;
 
-const Layout = ({ children }: { children: any }) => {
+
+
+const Layout = ({ children,currentUser }: { children: any, currentUser: Users }) => {
   return (
     <>
       <Header />
       <Grid>
         <GridItem size={2}>
-          <Sidebar />
+          <Sidebar currentUser={currentUser} />
         </GridItem>
         <GridItem image={HomeBackground} size={8}>
           <Main>{children}</Main>
